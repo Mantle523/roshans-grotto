@@ -3,9 +3,9 @@
   "npc_dota_hero_ancient_apparition_roshansgrotto"
   {
     "AbilityLayout"     "6"
-    "override_hero"     "npc_dota_hero_ancient_apparition"
+    "override_hero"     "npc_dota_hero_wisp"
     "SoundSet"          "0" 
-    "Ability1"        "example_ability" 
+    "Ability1"        "roshansgrotto_empty1" 
     "Ability2"        "roshansgrotto_empty2" 
     "Ability3"        "roshansgrotto_empty3" 
     "Ability4"        "roshansgrotto_empty4"
