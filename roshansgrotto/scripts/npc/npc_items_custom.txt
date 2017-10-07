@@ -31,7 +31,10 @@
     "AbilityManaCost"       "0 0 0 0"
   }
 
-  "item_dire_test"
+   //===================================================================================================================================
+  //===================================================================================================================================
+
+  "item_dire_melee_1"
   {
     "ID"    "3000"
     "BaseClass"                 "item_datadriven"
@@ -66,7 +69,7 @@
     {
         "SpawnUnit"
         {
-            "UnitName"      "npc_dota_dire_test"
+            "UnitName"      "npc_dota_dire_melee_1"
             "Target"        "POINT"
             "UnitCount"     "1"
             "GrantsGold"    "0"
@@ -80,11 +83,228 @@
                     "Target"        "TARGET"
                     "Duration"      "0.03"
                 }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_frostivus_spirit_dire"
+                    "Target"        "TARGET"
+                }
             }
+        }
+        "SpendCharge" 
+        {
+
         }
     }
 
+    "Modifiers"
+    {
+        "modifier_frostivus_spirit_dire"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "IsDebuff"          "0"
 
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+    
+            //"EffectName"        "particle_name"
+            //"EffectAttachType"  "follow_origin"
+    
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "frostivus_spirit/dire.lua"
+                    "Function"      "InitialStacks"
+                }
+            }
+        }
+    }
   }
+
+  //===================================================================================================================================
+  //===================================================================================================================================
+
+  "item_radiant_melee_1"
+  {
+    "ID"    "3001"
+    "BaseClass"                 "item_datadriven"
+    "AbilityTextureName"        "ability_name"
+
+    "ItemCost"                  "0"
+
+    "ItemInitialCharges"        "1"
+    "ItemDisplayCharges"        "1"
+    "ItemRequiresCharges"       "1"
+    "ItemStackable"             "1"
+
+    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ITEM"
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"        "500"
+
+    // Time   
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"       "0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"       "0 0 0 0"
+
+    "precache"
+    {
+        "model"             "models\creeps\lane_creeps\creep_radiant_melee\radiant_melee.vmdl"
+    }
+
+    "OnSpellStart"
+    {
+        "SpawnUnit"
+        {
+            "UnitName"      "npc_dota_radiant_melee_1"
+            "Target"        "POINT"
+            "UnitCount"     "1"
+            "GrantsGold"    "0"
+            "GrantsXP"      "0"
+            "SpawnRadius"   "10"
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_phased"
+                    "Target"        "TARGET"
+                    "Duration"      "0.03"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_frostivus_spirit_radiant"
+                    "Target"        "TARGET"
+                }
+            }
+        }
+        "SpendCharge" 
+        {
+
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_frostivus_spirit_radiant"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "IsDebuff"          "0"
+
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+    
+            //"EffectName"        "particle_name"
+            //"EffectAttachType"  "follow_origin"
+    
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "frostivus_spirit/radiant.lua"
+                    "Function"      "InitialStacks"
+                }
+            }
+        }
+    }
+  }
+
+  //===================================================================================================================================
+  //===================================================================================================================================  
+
+    "item_dire_melee_2"
+  {
+    "ID"    "3002"
+    "BaseClass"                 "item_datadriven"
+    "AbilityTextureName"        "ability_name"
+
+    "ItemCost"                  "0"
+
+    "ItemInitialCharges"        "1"
+    "ItemDisplayCharges"        "1"
+    "ItemRequiresCharges"       "1"
+    "ItemStackable"             "1"
+
+    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ITEM"
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"        "500"
+
+    // Time   
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"       "0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"       "0 0 0 0"
+
+    "precache"
+    {
+        "model"             "models\creeps\lane_creeps\creep_bad_melee\creep_bad_melee_mega.vmdl"
+    }
+
+    "OnSpellStart"
+    {
+        "SpawnUnit"
+        {
+            "UnitName"      "npc_dota_dire_melee_2"
+            "Target"        "POINT"
+            "UnitCount"     "1"
+            "GrantsGold"    "0"
+            "GrantsXP"      "0"
+            "SpawnRadius"   "10"
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_phased"
+                    "Target"        "TARGET"
+                    "Duration"      "0.03"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_frostivus_spirit_dire"
+                    "Target"        "TARGET"
+                }
+            }
+        }
+        "SpendCharge" 
+        {
+
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_frostivus_spirit_dire"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "IsDebuff"          "0"
+
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+    
+            //"EffectName"        "particle_name"
+            //"EffectAttachType"  "follow_origin"
+    
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "frostivus_spirit/dire.lua"
+                    "Function"      "InitialStacks"
+                }
+            }
+        }
+    }
+  }
+
+  //===================================================================================================================================
+  //=================================================================================================================================== 
 }
 
