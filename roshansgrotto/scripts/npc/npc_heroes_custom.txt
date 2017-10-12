@@ -1,12 +1,12 @@
 "DOTAHeroes"
 {
-  "npc_dota_hero_ancient_apparition_roshansgrotto"
+  "npc_dota_hero_roshansgrotto"
   {
     "AbilityLayout"     "6"
     "override_hero"     "npc_dota_hero_wisp"
     "SoundSet"          "0" 
-    "Ability1"        "roshansgrotto_empty1" 
-    "Ability2"        "roshansgrotto_empty2" 
+    "Ability1"        "rg_gift_present" 
+    "Ability2"        "rg_gift_coal" 
     "Ability3"        "roshansgrotto_empty3" 
     "Ability4"        "roshansgrotto_empty4"
     "Ability5"        "roshansgrotto_empty5"
