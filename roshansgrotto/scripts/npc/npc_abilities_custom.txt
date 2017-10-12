@@ -61,7 +61,7 @@
     //-------------------------------------------------------------------------------------------------------------
     "AbilityManaCost"       "0 0 0 0"
   }
-  
+
 //-------------------
 // Dummy stuff
 //-------------------
@@ -89,6 +89,144 @@
       }
     }
   }
+
+  //==============================================================================================================================
+  //==============================================================================================================================
+
+  "rg_gift_present"
+  {
+    "BaseClass"                 "ability_datadriven"
+    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    //"AbilityType"             "DOTA_ABILITY_TYPE_ATTRIBUTES"
+    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_BASIC"
+
+    "MaxLevel"                  "3"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"              "900"
+    "AbilityCastPoint"              "0.1"
+
+    // Time     
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"               "0.5 0.4 0.3"
+
+    "OnSpellStart"
+    {
+        "TrackingProjectile"
+        {
+            "Target"            "TARGET"
+            //"EffectName"        "particles/base_attacks/ranged_tower_bad.vpcf"
+            "Dodgeable"         "1"
+            "ProvidesVision"    "1"
+            //"VisionRadius"      "%vision_radius"
+            "MoveSpeed"         "800"
+            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+        }
+    }
+    "OnProjectileHitUnit"
+    {
+      "DeleteOnHit"    "1"
+      "RunScript"
+      {
+          "ScriptFile"    "game_scripts/frostivus_spirit/radiant.lua"
+          "Function"      "RemoveStacks"
+      }
+    }
+     "Modifiers"
+    {
+      "modifier_rg_pacifier_good"
+      {
+        "Passive"           "0"
+        "IsHidden"          "0"
+        "Buff"              "1"
+    
+        //"EffectName"        "particle_name"
+        //"EffectAttachType"  "follow_origin"
+      }
+      "modifier_rg_pacifier_bad"
+      {
+        "Passive"           "0"
+        "IsHidden"          "0"
+        "Buff"              "1"
+    
+        //"EffectName"        "particle_name"
+        //"EffectAttachType"  "follow_origin"
+      }
+    } 
+  }
+
+  //=================================================================================================================
+
+    "rg_gift_coal"
+  {
+    "BaseClass"                 "ability_datadriven"
+    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    //"AbilityType"             "DOTA_ABILITY_TYPE_ATTRIBUTES"
+    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_BASIC"
+
+    "MaxLevel"                  "3"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"              "900"
+    "AbilityCastPoint"              "0.1"
+
+    // Time     
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"               "0.5 0.4 0.3"
+
+    "OnSpellStart"
+    {
+        "TrackingProjectile"
+        {
+            "Target"            "TARGET"
+            //"EffectName"        "particles/base_attacks/ranged_tower_bad.vpcf"
+            "Dodgeable"         "1"
+            "ProvidesVision"    "1"
+            //"VisionRadius"      "%vision_radius"
+            "MoveSpeed"         "800"
+            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "DeleteOnHit"    "1"
+        "RunScript"
+        {
+            "ScriptFile"    "game_scripts/frostivus_spirit/dire.lua"
+            "Function"      "RemoveStacks"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_rg_pacifier_good"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "Buff"              "1"
+    
+            //"EffectName"        "particle_name"
+            //"EffectAttachType"  "follow_origin"
+        }
+        "modifier_rg_pacifier_bad"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "Buff"              "1"
+    
+            //"EffectName"        "particle_name"
+            //"EffectAttachType"  "follow_origin"
+        }
+    }
+  }
+
+  //==============================================================================================================================
+  //==============================================================================================================================
   
   "roshansgrotto_empty1"
   {

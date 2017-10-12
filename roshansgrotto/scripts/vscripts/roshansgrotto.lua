@@ -96,6 +96,19 @@ end
 function RoshansGrotto:OnHeroInGame(hero)
   DebugPrint("[ROSHANSGROTTO] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
+  local innate_abilities = {
+   "rg_gift_present",
+   "rg_gift_coal"
+}
+
+-- Cycle through any innate abilities found, then level them
+for i = 1, #innate_abilities do
+   local current_ability = hero:FindAbilityByName(innate_abilities[i])
+   if current_ability then
+      current_ability:SetLevel(1)
+   end
+end
+
   -- This line for example will set the starting gold of every hero to 500 unreliable gold
   --hero:SetGold(500, false)
 
