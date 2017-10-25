@@ -1,51 +1,53 @@
--- This is the entry-point to your game mode and should be used primarily to precache models/particles/sounds/etc
+if RoshansGrotto == nil then
+    --DebugPrint( "[ROSHANSGROTTO] creating roshansgrotto game mode" )
+    _G.RoshansGrotto = class({})
+end
 
-require('internal/util')
-require('roshansgrotto')
+--requrie list
+local requires = {
+	"internal/util",
+	"roshansgrotto",
+	"libraries/timers",
+	"libraries/physics",
+	"libraries/projectiles",
+	"libraries/notifications",
+	"libraries/animations",
+	"libraries/playertables",
+	"libraries/containers",
+	"libraries/pathgraph",
+	"libraries/selection",
+	
+	"internal/roshansgrotto",
+	"internal/events",
+
+	"settings",
+
+	"events",
+
+	--add game logic files here as they are made
+	--"",
+}
+
+for _, r in pairs(requires) do
+	require(r)
+end
+
+
+
 
 function Precache( context )
---[[
-  This function is used to precache resources/units/items/abilities that will be needed
-  for sure in your game and that will not be precached by hero selection.  When a hero
-  is selected from the hero selection screen, the game will precache that hero's assets,
-  any equipped cosmetics, and perform the data-driven precaching defined in that hero's
-  precache{} block, as well as the precache{} block for any equipped abilities.
-
-  See RoshansGrotto:PostLoadPrecache() in roshansgrotto.lua for more information
-  ]]
-
-  DebugPrint("[ROSHANSGROTTO] Performing pre-load precache")
-
-  -- Particles can be precached individually or by folder
-  -- It it likely that precaching a single particle system will precache all of its children, but this may not be guaranteed
-  PrecacheResource("particle", "particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf", context)
-  PrecacheResource("particle_folder", "particles/test_particle", context)
-
-  -- Models can also be precached by folder or individually
-  -- PrecacheModel should generally used over PrecacheResource for individual models
-  PrecacheResource("model_folder", "particles/heroes/antimage", context)
-  PrecacheResource("model", "particles/heroes/viper/viper.vmdl", context)
-  PrecacheModel("models/heroes/viper/viper.vmdl", context)
-  --PrecacheModel("models/props_gameplay/treasure_chest001.vmdl", context)
-  --PrecacheModel("models/props_debris/merchant_debris_chest001.vmdl", context)
-  --PrecacheModel("models/props_debris/merchant_debris_chest002.vmdl", context)
-
-  -- Sounds can precached here like anything else
-  PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
-
-  -- Entire items can be precached by name
-  -- Abilities can also be precached in this way despite the name
-  PrecacheItemByNameSync("example_ability", context)
-  PrecacheItemByNameSync("item_example_item", context)
-
-  -- Entire heroes (sound effects/voice/models/particles) can be precached with PrecacheUnitByNameSync
-  -- Custom units from npc_units_custom.txt can also have all of their abilities and precache{} blocks precached in this way
-  PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
-  PrecacheUnitByNameSync("npc_dota_hero_enigma", context)
+		-- create a kv file containing all precache material
 end
 
--- Create the game mode when we activate
+
 function Activate()
   GameRules.RoshansGrotto = RoshansGrotto()
-  GameRules.RoshansGrotto:_InitRoshansGrotto()
+  GameRules.RoshansGrotto:InitGameMode()
+  RoshansGrotto.HasRunOnce = true
+  print("Activated")
 end
+
+--[[if RoshansGrotto.HasRunOnce then
+	RoshansGrotto:OnScriptReload()
+end
+]]

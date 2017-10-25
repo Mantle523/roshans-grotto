@@ -1,98 +1,25 @@
--- This is the primary roshansgrotto roshansgrotto script and should be used to assist in initializing your game mode
 ROSHANSGROTTO_VERSION = "1.00"
 
--- Set this to true if you want to see a complete debug output of all events/processes done by roshansgrotto
--- You can also change the cvar 'roshansgrotto_spew' at any time to 1 or 0 for output/no output
 ROSHANSGROTTO_DEBUG_SPEW = true 
 
-if RoshansGrotto == nil then
-    DebugPrint( '[ROSHANSGROTTO] creating roshansgrotto game mode' )
-    _G.RoshansGrotto = class({})
-end
-
--- This library allow for easily delayed/timed actions
-require('libraries/timers')
--- This library can be used for advancted physics/motion/collision of units.  See PhysicsReadme.txt for more information.
-require('libraries/physics')
--- This library can be used for advanced 3D projectile systems.
-require('libraries/projectiles')
--- This library can be used for sending panorama notifications to the UIs of players/teams/everyone
-require('libraries/notifications')
--- This library can be used for starting customized animations on units from lua
-require('libraries/animations')
--- This library can be used to synchronize client-server data via player/client-specific nettables
-require('libraries/playertables')
--- This library can be used to create container inventories or container shops
-require('libraries/containers')
--- This library provides an automatic graph construction of path_corner entities within the map
-require('libraries/pathgraph')
--- This library (by Noya) provides player selection inspection and management from server lua
-require('libraries/selection')
-
--- These internal libraries set up roshansgrotto's events and processes.  Feel free to inspect them/change them if you need to.
-require('internal/roshansgrotto')
-require('internal/events')
-
--- settings.lua is where you can specify many different properties for your game mode and is one of the core roshansgrotto files.
-require('settings')
--- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core roshansgrotto files.
-require('events')
 
 
--- This is a detailed example of many of the containers.lua possibilities, but only activates if you use the provided "playground" map
-if GetMapName() == "playground" then
-  require("examples/playground")
-end
-
---require("examples/worldpanelsExample")
-
---[[
-  This function should be used to set up Async precache calls at the beginning of the gameplay.
-
-  In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
-  after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
-  be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will 
-  precache the precache{} block statement of the unit and all precache{} block statements for every Ability# 
-  defined on the unit.
-
-  This function should only be called once.  If you want to/need to precache more items/abilities/units at a later
-  time, you can call the functions individually (for example if you want to precache units in a new wave of
-  holdout).
-
-  This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
-]]
 function RoshansGrotto:PostLoadPrecache()
   DebugPrint("[ROSHANSGROTTO] Performing Post-Load precache")    
-  --PrecacheItemByNameAsync("item_example_item", function(...) end)
-  --PrecacheItemByNameAsync("example_ability", function(...) end)
 
-  --PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
-  --PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
 end
 
---[[
-  This function is called once and only once as soon as the first player (almost certain to be the server in local lobbies) loads in.
-  It can be used to initialize state that isn't initializeable in InitRoshansGrotto() but needs to be done before everyone loads in.
-]]
+
 function RoshansGrotto:OnFirstPlayerLoaded()
   DebugPrint("[ROSHANSGROTTO] First Player has loaded")
 end
 
---[[
-  This function is called once and only once after all players have loaded into the game, right as the hero selection time begins.
-  It can be used to initialize non-hero player state or adjust the hero selection (i.e. force random etc)
-]]
+
 function RoshansGrotto:OnAllPlayersLoaded()
   DebugPrint("[ROSHANSGROTTO] All Players have loaded into the game")
 end
 
---[[
-  This function is called once and only once for every player when they spawn into the game for the first time.  It is also called
-  if the player's hero is replaced with a new hero for any reason.  This function is useful for initializing heroes, such as adding
-  levels, changing the starting gold, removing/adding abilities, adding physics, etc.
 
-  The hero parameter is the hero entity that just spawned in
-]]
 function RoshansGrotto:OnHeroInGame(hero)
   DebugPrint("[ROSHANSGROTTO] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
@@ -102,26 +29,17 @@ function RoshansGrotto:OnHeroInGame(hero)
 }
 
 -- Cycle through any innate abilities found, then level them
-for i = 1, #innate_abilities do
+  for i = 1, #innate_abilities do
    local current_ability = hero:FindAbilityByName(innate_abilities[i])
    if current_ability then
       current_ability:SetLevel(1)
    end
-end
+  end
 
-  -- This line for example will set the starting gold of every hero to 500 unreliable gold
+
   --hero:SetGold(500, false)
 
-  -- These lines will create an item and add it to the player, effectively ensuring they start with the item
-  local item = CreateItem("item_example_item", hero, hero)
-  hero:AddItem(item)
 
-  --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
-    --with the "example_ability" ability
-
-  local abil = hero:GetAbilityByIndex(1)
-  hero:RemoveAbility(abil:GetAbilityName())
-  hero:AddAbility("example_ability")]]
 end
 
 --[[
@@ -147,23 +65,167 @@ function RoshansGrotto:InitRoshansGrotto()
   RoshansGrotto = self
   DebugPrint('[ROSHANSGROTTO] Starting to load RoshansGrotto roshansgrotto...')
 
-  -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-  Convars:RegisterCommand( "command_example", Dynamic_Wrap(RoshansGrotto, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
-
   DebugPrint('[ROSHANSGROTTO] Done loading RoshansGrotto roshansgrotto!\n\n')
+
 end
 
--- This is an example console command
-function RoshansGrotto:ExampleConsoleCommand()
-  print( '******* Example Console Command ***************' )
-  local cmdPlayer = Convars:GetCommandClient()
-  if cmdPlayer then
-    local playerID = cmdPlayer:GetPlayerID()
-    if playerID ~= nil and playerID ~= -1 then
-      -- Do something here for the player who called this command
-      PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
+function RoshansGrotto:InitGameMode()
+
+  currentRound = nil
+  RoundInProgress = 0
+
+  GameRules:SetHeroRespawnEnabled(false)
+  GameRules:SetSameHeroSelectionEnabled(true)
+  GameRules:SetPostGameTime(100)
+  GameRules:SetPreGameTime(30)
+  GameRules:SetHeroSelectionTime(0)
+  GameRules:SetGoldPerTick(0)
+
+  GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
+  GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
+  GameRules:GetGameModeEntity():SetCustomGameForceHero( "npc_dota_hero_wisp")
+
+
+  ListenToGameEvent( "npc_spawned", Dynamic_Wrap( RoshansGrotto, "OnNPCSpawned" ), self )
+  ListenToGameEvent( "player_reconnected", Dynamic_Wrap( RoshansGrotto, 'OnPlayerReconnected' ), self )
+  ListenToGameEvent( "entity_killed", Dynamic_Wrap( RoshansGrotto, 'OnEntityKilled' ), self )
+  ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( RoshansGrotto, "OnGameRulesStateChange" ), self )
+
+  Timers:CreateTimer(function ()
+      RoshansGrotto:OnThink()
+      return 0.25
+    end)
+end
+
+
+function RoshansGrotto:OnGameRulesStateChange()
+  print( "recognised game_rules_state_change")
+  local nNewState = GameRules:State_Get() 
+  if nNewState == DOTA_GAMERULES_STATE_PRE_GAME then
+    ShowGenericPopup("#roshansgrotto_instructions_title", "#roshansgrotto_instructions_body","", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN)
+  elseif nNewState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then 
+    --start first round
+    print( "starting first round" )
+    currentRound = 1
+    RoshansGrottoRound:Begin()
+    RoundInProgress = 1
+  end
+end
+
+function RoshansGrotto:OnThink() -- REMEMBER TO RE-ENABLE DEFEAT CHECK!!!!!!!!!!!!!
+  --print("thinking")
+  if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+    --self._CheckForDefeat()
+  elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+    return nil
+  end
+  return 1
+end
+
+function RoshansGrotto:_RefreshPlayers()
+  for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+    if PlayerResource:HasSelectedHero( nPlayerID ) then
+      local  hero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
+      if not hero:IsAlive() then
+        return
+      end
+      hero:SetHealth(hero:GetMaxHealth() )
+      hero:SetMana(hero:GetMaxMana() )
     end
+  end 
+end
+
+function RoshansGrotto:_CheckForDefeat()
+  if GameRules:State_Get() ~= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+    return
   end
 
-  print( '*********************************************' )
+  local  bAllGoodDead = true
+  local  bAllBadDead = true
+  for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+    if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_GOODGUYS then 
+      if not PlayerResource:HasSelectedHero( nPlayerID ) then
+       bAllGoodDead = false
+      else
+        local hero = PlayerResource:GetSelectedHeroEntity( nPlayerID )
+        if hero and hero:IsAlive() then
+          bAllGoodDead = false
+        end
+      end
+    end
+  end
+  for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+    if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_BADGUYS then 
+      if not PlayerResource:HasSelectedHero( nPlayerID ) then
+       bAllBadDead = false
+      else
+        local hero = PlayerResource:GetSelectedHeroEntity( nPlayerID )
+        if hero and hero:IsAlive() then
+          bAllBadDead = false
+        end
+      end
+    end
+  end  
+
+  if bAllGoodDead then 
+    GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS)
+    return
+  end
+
+  if bAllBadDead then
+    GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
+    return
+  end
 end
+
+function RoshansGrotto:_SpawnHeroClientEffects( hero, nPlayerID )
+  ParticleManager:ReleaseParticleIndex( ParticleManager:CreateParticleForPlayer( "particles/generic_gameplay/winter_effects_hero.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, PlayerResource:GetPlayer( nPlayerID ) ) )
+end
+
+function RoshansGrotto:OnNPCSpawned( event )
+  print("npc spawned")
+  local spawnedUnit = EntIndexToHScript(event.entindex)
+  if not spawnedUnit or spawnedUnit:GetClassname() == "npc_dota_thinker" or spawnedUnit:IsPhantom() then
+    return
+  end
+
+  if spawnedUnit:IsCreature() then
+    spawnedUnit:SetMaxHealth(spawnedUnit:GetLevel() )
+    spawnedUnit:SetHPGain( 0 )
+    spawnedUnit:SetManaGain( 0 )
+    spawnedUnit:SetHPRegenGain( 0 )
+    spawnedUnit:SetManaRegenGain( 0 )
+    spawnedUnit:SetDamageGain(0)
+    spawnedUnit:SetArmorGain( 0 )
+    spawnedUnit:SetMagicResistanceGain( 0 )
+    spawnedUnit:SetDisableResistanceGain( 0 )
+    spawnedUnit:SetAttackTimeGain( 0 )
+    spawnedUnit:SetMoveSpeedGain( 0 )
+    spawnedUnit:SetBountyGain( 0 )
+    spawnedUnit:SetDeathXP( 0 )
+    spawnedUnit:SetXPGain( 0 )
+  end
+
+  if spawnedUnit:IsRealHero() then
+    for nPlayerID = 0, DOTA_MAX_PLAYERS-1 do
+      if ( PlayerResource:IsValidPlayer( nPlayerID ) ) then
+        self:_SpawnHeroClientEffects( spawnedUnit, nPlayerID )
+      end
+    end
+  end
+end
+
+function RoshansGrotto:OnPlayerReconnected( event )
+  local nReconnectedPlayerID = event.PlayerID
+  for _, hero in pairs(Entities:FindAllByClassname("npc_dota_hero") ) do 
+    if hero:IsRealHero() then 
+      self:_SpawnHeroClientEffects( hero, nReconnectedPlayerID)
+    end
+  end
+end
+
+function RoshansGrotto:OnEntityKilled( event )
+end
+
+
+
