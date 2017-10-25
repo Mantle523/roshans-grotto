@@ -1,7 +1,7 @@
 "AddonInfo"
 {
   "TeamCount" "2"
-  "maps"      "template_map playground"
+  "maps"      "template_map playground rogro"
   "IsPlayable"  "1"
   "template_map"
   {
