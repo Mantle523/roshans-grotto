@@ -26,7 +26,7 @@ function RoshansGrotto:_OnGameRulesStateChange(keys)
   end
 
   RoshansGrotto._reentrantCheck = true
-  RoshansGrotto:OnGameRulesStateChange(keys)
+--  RoshansGrotto:OnGameRulesStateChange(keys)
   RoshansGrotto._reentrantCheck = false
 end
 
